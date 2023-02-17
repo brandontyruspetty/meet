@@ -31,6 +31,7 @@ if (token) {
   removeQuery();
   const url = 'https://kf5v21srod.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' + '/' + token;
   const result = await axios.get(url);
+
   if (result.data) {
     var locations = extractLocations(result.data.events);
     localStorage.setItem("lastEvents", JSON.stringify(result.data));
@@ -49,6 +50,7 @@ export const getAccessToken = async () => {
     await localStorage.removeItem("access_token");
     const searchParams = new URLSearchParams(window.location.search);
     const code = await searchParams.get("code");
+    
     if (!code) {
       const results = await axios.get(
         "https://kf5v21srod.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url"
@@ -59,7 +61,6 @@ export const getAccessToken = async () => {
     return code && getToken(code);
   }
   return accessToken;
-
 }
 
 const removeQuery = () => {
