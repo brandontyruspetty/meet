@@ -1,13 +1,15 @@
+
 import React, { Component } from 'react';
 import { shallow } from 'enzyme';
 // COMPONTENTS //////////
+import App from '../App';
 import NumberOfEvents from '../NumberOfEvents';
 
 describe('<NumberOfEvents />', () => {
   
   let NumberOfEventsWrapper, noeInput;
   beforeAll(() => {
-    NumberOfEventsWrapper = shallow(<NumberOfEvents />);
+    NumberOfEventsWrapper = shallow(<NumberOfEvents updateEvents={()=>{}} />);
     noeInput = NumberOfEventsWrapper.find('input.noe-input');
   });
 
@@ -16,17 +18,13 @@ describe('<NumberOfEvents />', () => {
     expect(noeInput).toBeDefined();
   });
   
-  test('noe-input is 10 (number type) by default', () => {
-    expect(NumberOfEventsWrapper.find('input.noe-input').prop('type')).toBe('number');
-    expect(NumberOfEventsWrapper.state('noe')).toBe(10);
+  test('noe-input is 32 (number type) by default', () => {
+    expect(noeInput.prop('type')).toBe('number');
+    expect(NumberOfEventsWrapper.state('noe')).toBe(32);
   })
   
-  test('noe-input is changed and the value is reflected correctly', () => {
-    expect(NumberOfEventsWrapper.state('noe')).toBe(10);
-    NumberOfEventsWrapper.find('input.noe-input')
-    .simulate('change', {
-      target: { value: 15 }
-    });
+  test('noe-input is changed, state and value are reflected correctly', () => {
+    expect(NumberOfEventsWrapper.state('noe')).toBe(32);
+    noeInput.simulate('change', {target: { value: 15 }});
     expect(NumberOfEventsWrapper.state('noe')).toBe(15);
   })
-})
