@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 
 class NumberOfEvents extends Component {
-  state = { noe: 10 }
+  state = { noe: 32 }
 
-  componentDidMount() {
-    this.setState({ noe: this.props.noe || 10 });
-  }
-
-  changeNOE(value) {
-    this.setState({ noe: value })
+  handleInputChanged = (event, props) => {
+    let inputValue = event.target.value;
+    if(inputValue < 0) inputValue = 0;
+    this.props.updateEvents(null, inputValue);
+    this.setState({ noe: inputValue });
+    console.log(this.props);
   }
 
   render() {
@@ -17,12 +17,12 @@ class NumberOfEvents extends Component {
       <div className="numberOfEvents">
         <h3>Number of Events:</h3>
         <input
-        className="noe-input"
-        type="number"
-        value={noe}
-        onChange={event => {
-          this.changeNOE(event.target.value);
-        }}
+          className="noe-input"
+          type="number"
+          value={noe}
+          onChange={event => {
+            this.handleInputChanged(event);
+          }}
         >
         </input>
       </div>
