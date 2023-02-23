@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './App.css'
-import './index.css'
+import './index.css';
+import * as atatus from 'atatus-spa';
+
+atatus.config('2ad2cce969534135862214e75b174bd7').install();
 
 ReactDOM.render(
   <React.StrictMode>
@@ -10,6 +13,8 @@ ReactDOM.render(
   </React.StrictMode>,
  document.getElementById('root')
 );
+
+
 
 /*import React from 'react';
 import ReactDOM from 'react-dom/client';
