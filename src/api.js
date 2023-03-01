@@ -39,7 +39,7 @@ if (token) {
   }
   NProgress.done();
   return result.data.events;
-}
+  }
 };
 
 export const getAccessToken = async () => {
