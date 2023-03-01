@@ -6,6 +6,7 @@ import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
 import { getEvents, extractLocations } from './api';
 import './nprogress.css';
+import { OfflineAlert } from './Alert';
 
 class App extends Component {
   state = {
@@ -69,9 +70,12 @@ class App extends Component {
   
 
   render() {
+    const offlineMessage = navigator.online ? "" : "You are currently offline and the list of events may not be up to date";
+    
     return (
       <div className="App">
         <div className="filter-box">
+          <OfflineAlert message={offlineMessage}/>
           <CitySearch
             locations={this.state.locations}
             updateEvents= {this.updateEvents}
