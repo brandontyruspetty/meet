@@ -9,12 +9,14 @@ class Alert extends Component {
   getStyle = () => {
     return {
       color: this.color,
+      fontSize: '15px',
+      fontStyle: 'italic'
     };
   }
 
   render() {
     return (
-      <div className='Alerts'>
+      <div className='Alert'>
         <p style={this.getStyle()}>{this.props.text}</p>
       </div>
     );
