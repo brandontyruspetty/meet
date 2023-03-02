@@ -15,6 +15,7 @@ class App extends Component {
     locations: [],
     selectedLocation: 'all',
     eventCount: 32,
+    infoText: '',
     showWelcomeScreen: undefined
   }
 
@@ -23,7 +24,9 @@ class App extends Component {
     const accessToken = localStorage.getItem('access_token'); 
     const isTokenValid = (await checkToken(accessToken)).error ? false : true;
     const searchParams = new URLSearchParams(window.location.search);
-    const code = searchParams.get("code"); this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+    const code = searchParams.get("code"); 
+    
+    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
      if ((code || isTokenValid) && this.mounted) {
     getEvents().then((events) => {
       if (this.mounted) {
@@ -40,11 +43,12 @@ class App extends Component {
 
   updateEvents = (location, inputNumber) => {
     const {eventCount, seletedLocation} = this.state;
+    
     if (location) {
       getEvents().then(events => {
         const locationEvents = (location === 'all') ?
         events :
-        events.filter(event => event.location === location);
+        events.filter((event) => event.location === location);
         const eventsToShow=locationEvents.slice(0, eventCount);
         this.setState({
         events: eventsToShow,
@@ -56,7 +60,7 @@ class App extends Component {
         const locationEvents = (seletedLocation === 'all') ?
         events :
         events.filter((event) => event.location === seletedLocation);
-        const eventsToShow=locationEvents.slice(0, inputNumber);
+        const eventsToShow = locationEvents.slice(0, inputNumber);
         this.setState({
           events: eventsToShow,
           eventCount: inputNumber
@@ -78,9 +82,11 @@ class App extends Component {
   
 
   render() {
-    if (this.state.showWelcomeScreen === undefined) return <div className="App" />
-    const offlineMessage = navigator.online ? "" : "You are currently offline and the list of events may not be up to date";
+    const offlineMessage = navigator.online 
+    ? "" 
+    : "You are currently offline and the list of events may not be up to date";
     
+    if (this.state.showWelcomeScreen === undefined) return <div className="App" />
     return (
       <div className="App">
         <div className="filter-box">
