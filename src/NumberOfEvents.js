@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { ErrorAlert } from './Alert'
 
 class NumberOfEvents extends Component {
-  state = { noe: 32 }
+  state = { 
+    noe: 32,
+    errorText: ''
+   }
 
   handleInputChanged = (event, props) => {
     const inputValue = event.target.value;
