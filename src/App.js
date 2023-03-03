@@ -82,26 +82,26 @@ class App extends Component {
   
 
   render() {
-    const offlineMessage = navigator.online 
-    ? "" 
-    : "You are currently offline and the list of events may not be up to date";
+    const { events, locations, eventCount, showWelcomeScreen } = this.state;
     
     if (this.state.showWelcomeScreen === undefined) return <div className="App" />
     return (
       <div className="App">
         <div className="filter-box">
-          <OfflineAlert message={offlineMessage}/>
+          {!navigator.onLine &&
+          <OfflineAlert text="You are currently offline and the list of events may not be up to date"/>
+          }
           <CitySearch
-            locations={this.state.locations}
+            locations={locations}
             updateEvents= {this.updateEvents}
           />
           <NumberOfEvents
-            eventCount={this.state.eventCount}
+            eventCount={eventCount}
             updateEvents={this.updateEvents}
           />
         </div>
-        <EventList events={this.state.events} />
-        <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen} 
+        <EventList events={events} />
+        <WelcomeScreen showWelcomeScreen={showWelcomeScreen} 
           getAccessToken={() => { getAccessToken() }} />
       </div>
     );
