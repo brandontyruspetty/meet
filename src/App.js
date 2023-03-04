@@ -8,6 +8,7 @@ import NumberOfEvents from './NumberOfEvents';
 import { OfflineAlert } from './Alert';
 import { extractLocations, getEvents, checkToken, getAccessToken } from './api';
 import './nprogress.css';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 class App extends Component {
   state = {
@@ -68,13 +69,30 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Welcome to Meet App</h1>
-        <CitySearch locations={locations} updateEvents={this.updateEvents} />
-        <NumberOfEvents numberOfEvents={numberOfEvents} updateEvents={this.updateEvents} />
+        <h4>Choose your nearest city</h4>
+        <CitySearch updateEvents={this.updateEvents} locations={locations} />
+        <NumberOfEvents updateEvents={this.updateEvents} numberOfEvents={numberOfEvents}  />
         {!navigator.onLine &&
           <OfflineAlert text='App is currently offline. You are seeing your cached data.' />
         }
-
+        <h4>Events in each city</h4>
+        <ResponsiveContainer width="100%" height="100%">
+          <ScatterChart
+            width={400}
+            height={400}
+            margin={{
+              top: 20, right: 20, bottom: 20, left: 20,
+            }}
+            >
+            <CartesianGrid />
+            <XAxis type="category" dataKey="city" name="city" />
+            <YAxis type="number" dataKey="number" name="number of events" />
+            <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+            <Scatter data={this.getData()} fill="#8884d8" />
+          </ScatterChart>
+        </ResponsiveContainer>
         
+
         <EventList events={events} />
 
         <WelcomeScreen showWelcomeScreen={showWelcomeScreen} getAccessToken={() => { getAccessToken() }} />
